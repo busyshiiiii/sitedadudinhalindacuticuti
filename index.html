@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -197,6 +195,27 @@
   z-index: 12;
   transition: top 2s ease, transform 0.5s ease;
   margin-bottom: -20px; /* para compensar espaço extra */
+  #curtainWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  cursor: pointer;
+}
+
+#curtain {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 2s ease;
+}
+
+#curtainWrapper.caiu #curtain {
+  transform: translateY(100%);
+}
+
 }
 
 
@@ -209,6 +228,7 @@
 
   
     <h1>~Bem-vinda, Dudinha 🌺~</h1>
+
       <img id="snoopy" src="snoop.png" alt="snoopy" />
   
     <div class="text-container">
@@ -227,7 +247,7 @@
   
 
       
-  <div id="curtainWrapper"> 
+ <div id="curtainWrapper" onclick="abrirCortina()">
       <img id="curtain" src="eueduda.jpeg" alt="Cortina Snoopy" />
       </div>
       
@@ -243,66 +263,62 @@
     <div id="dialogContent"></div>
   </div>
 
-  <script>
-    const button = document.getElementById('revealButton');
-    const main = document.getElementById('mainContent');
+ <script>
+  const button = document.getElementById('revealButton');
+  const main = document.getElementById('mainContent');
+  const curtainWrapper = document.getElementById('curtainWrapper');
+  const textContainer = document.querySelector('.text-container');
 
-    button.addEventListener('click', () => {
-      button.style.display = 'none';
-      main.style.display = 'flex';
-      dropHearts();
-    });
+  button.addEventListener('click', () => {
+    button.style.display = 'none';
+    main.style.display = 'flex';
+    dropHearts();
+  });
 
-    function dropHearts() {
-      setInterval(() => {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.top = '-30px';
-        heart.style.animationDuration = 3 + Math.random() * 2 + 's';
-        heart.style.animationDelay = Math.random() * 2 + 's';
-        document.body.appendChild(heart);
+  function dropHearts() {
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = '-30px';
+      heart.style.animationDuration = 3 + Math.random() * 2 + 's';
+      heart.style.animationDelay = Math.random() * 2 + 's';
+      document.body.appendChild(heart);
 
-        setTimeout(() => heart.remove(), 7000);
-      }, 300);
-    }
-
-    let curtainRevealed = false;
-    document.addEventListener('keydown', (e) => {
-  if (!curtainRevealed && e.code === 'Space') {
-    const curtain = document.getElementById('curtain');
-
-
-    // Desce a cortina
-    curtain.style.top = '100%';
-
-
-    curtainRevealed = true;
+      setTimeout(() => heart.remove(), 7000);
+    }, 300);
   }
-});
 
-    
+  function abrirCortina() {
+    if (!curtainWrapper.classList.contains('caiu')) {
+      curtainWrapper.classList.add('caiu');
+      setTimeout(() => {
+        textContainer.style.display = 'block';
+      }, 2000); // espera a cortina descer
+    }
+  }
 
-    // NOVO: Caixinha de diálogo clicável
-    const dialogOverlay = document.getElementById('dialogOverlay');
-    const dialogBox = document.getElementById('dialogBox');
-    const dialogContent = document.getElementById('dialogContent');
-    const closeDialog = document.getElementById('closeDialog');
+  // Caixinha de diálogo dos spans
+  const dialogOverlay = document.getElementById('dialogOverlay');
+  const dialogBox = document.getElementById('dialogBox');
+  const dialogContent = document.getElementById('dialogContent');
+  const closeDialog = document.getElementById('closeDialog');
 
-    document.querySelectorAll('.clickable').forEach(span => {
-      span.addEventListener('click', () => {
-        const text = span.dataset.text || '...';
-        dialogContent.textContent = text;
+  document.querySelectorAll('.clickable').forEach(span => {
+    span.addEventListener('click', () => {
+      const text = span.dataset.text || '...';
+      dialogContent.textContent = text;
 
-        dialogBox.classList.add('active');
-        dialogOverlay.classList.add('active');
-      });
+      dialogBox.classList.add('active');
+      dialogOverlay.classList.add('active');
     });
+  });
 
-    closeDialog.addEventListener('click', () => {
-      dialogBox.classList.remove('active');
-      dialogOverlay.classList.remove('active');
-    });
-  </script>
+  closeDialog.addEventListener('click', () => {
+    dialogBox.classList.remove('active');
+    dialogOverlay.classList.remove('active');
+  });
+</script>
+
 </body>
 </html>
