@@ -1,0 +1,308 @@
+
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Dudinha</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+                                               <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #111;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #revealButton {
+      padding: 15px 30px;
+      font-size: 18px;
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #revealButton:hover {
+      background-color: white;
+      color: #111;
+    }
+
+    #mainContent {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(180deg, #300 0%, #900 100%);
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      padding: 20px;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 48px;
+      margin-top: 20px;
+    }
+
+    .heart {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: fall linear infinite;
+      z-index: 5;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        top: -10%;
+        opacity: 1;
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+      }
+    }
+
+    .text-container {
+      position: relative;
+      width: 80%;
+      max-width: 600px;
+      background-color: #fff;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      padding: 30px;
+      margin-top: -65px;
+      font-family: 'Arial', sans-serif;
+      font-size: 18px;
+      color: #111;
+      overflow: hidden;
+    }
+
+    #curtain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: top 2s ease;
+      z-index: 10;
+    }
+
+    /* NOVAS ESTILIZAÇÕES PARA PALAVRAS CLICÁVEIS E CAIXA DE DIÁLOGO */
+
+    .clickable {
+      text-decoration: underline;
+      cursor: pointer;
+      color: #ff4d6d;
+      transition: color 0.3s;
+    }
+
+    .clickable:hover {
+      color: #ff1a3c;
+    }
+
+    /* Fundo escurecido atrás da caixa */
+    #dialogOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 50;
+    }
+
+    /* Caixa de diálogo estilizada */
+    #dialogBox {
+      position: fixed;
+      top: 50%;
+      left: -400px; /* fora da tela inicialmente */
+      transform: translateY(-50%);
+      width: 350px;
+      background: #222;
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 0, 80, 0.8);
+      transition: left 0.5s ease;
+      z-index: 51;
+    }
+
+    /* Quando ativa, caixa aparece no centro */
+    #dialogBox.active {
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Fundo escurecido ativo */
+    #dialogOverlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Botão fechar */
+    #closeDialog {
+      position: absolute;
+      top: 8px; right: 12px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+#snoopy {
+  position: relative;
+  top: -25px; /* distância acima do container */
+  width: 120px;
+  z-index: 12;
+  transition: top 2s ease, transform 0.5s ease;
+  margin-bottom: -20px; /* para compensar espaço extra */
+}
+
+
+                                                       </style>
+</head>
+<body>
+  <button id="revealButton">Clique aqui!</button>
+  
+<div id="mainContent">  
+
+  
+    <h1>~Bem-vinda, Dudinha 🌺~</h1>
+      <img id="snoopy" src="snoop.png" alt="snoopy" />
+  
+    <div class="text-container">
+        <p id="loveText">
+        Meu bem, desde o dia em que você surgiu na minha vida, os dias tem se tornado cada vez mais belos, com mais significado, e com muita mais alegria, por que apesar das inúmeras preocupações do dia da dia, eu consigo me lembrar que bem longe, tem uma menininha muito bonita, que mesmo cansadinha e estressada, me 
+        <span class="clickable" data-text="Algo novo, forte e com certeza delicado.">ama</span> 
+        e isso é profundo, e bonito, o que construímos nesse tempo é muito belo e é impossível colocar preço nas nas nossas experiências. Cada momento juntinho, cada conversa profunda, cada abraço e consideração um pelo outro, todas essas coisas me deixam anestesiado de tanto sentimento, de tanto amor. Eu nunca senti nada comparado com o que eu sinto por você, e eu quero que você saiba, minha princesa, que você é sim 
+        <span class="clickable" data-text="Você é única, radiante, detalhada, pensada nos mínimos detalhes e com cada peculiaridade que eu adoraria explorar e conhecer.">especial</span>, 
+        <span class="clickable" data-text="Por mais que talvez não acredite nisso, você é forte, luta todos os dias e está de pé, em meio as dificuldades, você merece descanso, carinho e compreensão, e eu estou aqui, pra você">forte</span>, 
+        <span class="clickable" data-text="Eu admiro cada pequena coisa em você, seu jeito único, o jeito que você fala, ri, brinca, se chateia, a minha paixão é te admirar e se eu pudesse eu te desmontaria toda, só pra entender como você funciona e depois montaria denovo.">admirável</span>, e muito, mas muito 
+        <span class="clickable" data-text="Sua presença é agradável e confortável, você me da a chanche de mostrar quem eu sou de verdade e me sentir bem com isso, fora que você é hilariante.">agradável!</span>
+        <br> <br>
+        <ins>Clique nos itens sublinhados!</ins>
+      </p>
+
+  
+
+      
+  <div id="curtainWrapper"> 
+      <img id="curtain" src="eueduda.jpeg" alt="Cortina Snoopy" />
+      </div>
+      
+
+           
+
+
+  <!-- NOVO: Fundo escurecido e caixa de diálogo -->
+  <div id="dialogOverlay"></div>
+
+  <div id="dialogBox">
+    <button id="closeDialog">×</button>
+    <div id="dialogContent"></div>
+  </div>
+
+  <script>
+    const button = document.getElementById('revealButton');
+    const main = document.getElementById('mainContent');
+
+    button.addEventListener('click', () => {
+      button.style.display = 'none';
+      main.style.display = 'flex';
+      dropHearts();
+    });
+
+    function dropHearts() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '-30px';
+        heart.style.animationDuration = 3 + Math.random() * 2 + 's';
+        heart.style.animationDelay = Math.random() * 2 + 's';
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 7000);
+      }, 300);
+    }
+
+    let curtainRevealed = false;
+    document.addEventListener('keydown', (e) => {
+  if (!curtainRevealed && e.code === 'Space') {
+    const curtain = document.getElementById('curtain');
+
+
+    // Desce a cortina
+    curtain.style.top = '100%';
+
+
+    curtainRevealed = true;
+  }
+});
+
+    
+
+    // NOVO: Caixinha de diálogo clicável
+    const dialogOverlay = document.getElementById('dialogOverlay');
+    const dialogBox = document.getElementById('dialogBox');
+    const dialogContent = document.getElementById('dialogContent');
+    const closeDialog = document.getElementById('closeDialog');
+
+    document.querySelectorAll('.clickable').forEach(span => {
+      span.addEventListener('click', () => {
+        const text = span.dataset.text || '...';
+        dialogContent.textContent = text;
+
+        dialogBox.classList.add('active');
+        dialogOverlay.classList.add('active');
+      });
+    });
+
+    closeDialog.addEventListener('click', () => {
+      dialogBox.classList.remove('active');
+      dialogOverlay.classList.remove('active');
+    });
+  </script>
+</body>
+</html>
