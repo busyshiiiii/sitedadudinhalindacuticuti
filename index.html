@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
-                                               <style>
+  <style>
     body {
       margin: 0;
       padding: 0;
@@ -106,13 +106,13 @@
       border-radius: 20px;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
       padding: 30px;
-      margin-top: -65px;
       font-family: 'Arial', sans-serif;
       font-size: 18px;
       color: #111;
       overflow: hidden;
+      margin-top: -65px;
+      z-index: 10;
     }
-
 
     #curtain {
       position: absolute;
@@ -125,8 +125,6 @@
       z-index: 10;
     }
 
-    /* NOVAS ESTILIZAÇÕES PARA PALAVRAS CLICÁVEIS E CAIXA DE DIÁLOGO */
-
     .clickable {
       text-decoration: underline;
       cursor: pointer;
@@ -138,7 +136,6 @@
       color: #ff1a3c;
     }
 
-    /* Fundo escurecido atrás da caixa */
     #dialogOverlay {
       position: fixed;
       top: 0; left: 0;
@@ -150,11 +147,10 @@
       z-index: 50;
     }
 
-    /* Caixa de diálogo estilizada */
     #dialogBox {
       position: fixed;
       top: 50%;
-      left: -400px; /* fora da tela inicialmente */
+      left: -400px;
       transform: translateY(-50%);
       width: 350px;
       background: #222;
@@ -166,91 +162,106 @@
       z-index: 51;
     }
 
-    /* Quando ativa, caixa aparece no centro */
     #dialogBox.active {
       left: 50%;
       transform: translate(-50%, -50%);
     }
 
-    /* Fundo escurecido ativo */
     #dialogOverlay.active {
       opacity: 1;
       pointer-events: auto;
     }
 
-    /* Botão fechar */
     #closeDialog {
       position: absolute;
-      top: 8px; right: 12px;
+      top: 8px;
+      right: 12px;
       background: transparent;
       border: none;
       color: white;
       font-size: 24px;
       cursor: pointer;
     }
-#snoopy {
-  position: relative;
-  top: -25px; /* distância acima do container */
-  width: 120px;
-  z-index: 12;
-  transition: top 2s ease, transform 0.5s ease;
-  margin-bottom: -20px; /* para compensar espaço extra */
-}
+
+    #snoopy {
+      position: relative;
+      top: -25px;
+      width: 120px;
+      z-index: 12;
+      transition: top 2s ease, transform 0.5s ease;
+      margin-bottom: -20px;
+    }
 
 
-                                                       </style>
-</head>
+  #video-fundo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.1; /* Quase imperceptível */
+    pointer-events: none; /* Garante que ninguém clique no vídeo sem querer */
+    filter: blur(1px); /* Opcional: dá um arzinho de lembrança distante */
+  }
+
+
+
+
+  </style>
+</head>  
 <body>
+
+
+
   <button id="revealButton">Clique aqui!</button>
-  
-<div id="mainContent">  
+<audio id="musica-fundo" src="You Love Me.mp3" hidden></audio>
 
+
+  <div id="mainContent">
+    <video id="video-fundo" autoplay muted loop playsinline>
+  <source src="elatemotalento.mp4.mp4" type="video/mp4">
+</video>
     <h1>~Bem-vinda, Dudinha 🌺~</h1>
-      <img id="snoopy" src="snoop.png" alt="snoopy" />
-  
+    <img id="snoopy" src="snoop.png" alt="snoopy" />
+
     <div class="text-container">
-        <p id="loveText">
-        Meu bem, desde o dia em que você surgiu na minha vida, os dias tem se tornado cada vez mais belos, com mais significado, e com muita mais alegria, por que apesar das inúmeras preocupações do dia da dia, eu consigo me lembrar que bem longe, tem uma menininha muito bonita, que mesmo cansadinha e estressada, me 
-        <span class="clickable" data-text="Algo novo, forte e com certeza delicado.">ama</span> 
-        e isso é profundo, e bonito, o que construímos nesse tempo é muito belo e é impossível colocar preço nas nas nossas experiências. Cada momento juntinho, cada conversa profunda, cada abraço e consideração um pelo outro, todas essas coisas me deixam anestesiado de tanto sentimento, de tanto amor. Eu nunca senti nada comparado com o que eu sinto por você, e eu quero que você saiba, minha princesa, que você é sim 
+      
+      <p id="loveText">
+      
+
+        Meu bem, desde o dia em que você surgiu na minha vida, os dias têm se tornado cada vez mais belos, com mais significado, e com muita mais alegria, porque apesar das inúmeras preocupações do dia a dia, eu consigo me lembrar que bem longe, tem uma menininha muito bonita, que mesmo cansadinha e estressada, me 
+        <span class="clickable" data-text="Algo novo, forte e com certeza delicado.">ama</span>,
+        e isso é profundo, e bonito. O que construímos nesse tempo é muito belo e é impossível colocar preço nas nossas experiências. Cada momento juntinho, cada conversa profunda, cada abraço e consideração um pelo outro, todas essas coisas me deixam anestesiado de tanto sentimento, de tanto amor. Eu nunca senti nada comparado com o que eu sinto por você, e eu quero que você saiba, minha princesa, que você é sim 
         <span class="clickable" data-text="Você é única, radiante, detalhada, pensada nos mínimos detalhes e com cada peculiaridade que eu adoraria explorar e conhecer.">especial</span>, 
-        <span class="clickable" data-text="Por mais que talvez não acredite nisso, você é forte, luta todos os dias e está de pé, em meio as dificuldades, você merece descanso, carinho e compreensão, e eu estou aqui, pra você">forte</span>, 
-        <span class="clickable" data-text="Eu admiro cada pequena coisa em você, seu jeito único, o jeito que você fala, ri, brinca, se chateia, a minha paixão é te admirar e se eu pudesse eu te desmontaria toda, só pra entender como você funciona e depois montaria denovo.">admirável</span>, e muito, mas muito 
-        <span class="clickable" data-text="Sua presença é agradável e confortável, você me da a chanche de mostrar quem eu sou de verdade e me sentir bem com isso, fora que você é hilariante.">agradável!</span>
-        <br> <br>
+        <span class="clickable" data-text="Por mais que talvez não acredite nisso, você é forte, luta todos os dias e está de pé, em meio às dificuldades, você merece descanso, carinho e compreensão, e eu estou aqui, pra você">forte</span>, 
+        <span class="clickable" data-text="Eu admiro cada pequena coisa em você, seu jeito único, o jeito que você fala, ri, brinca, se chateia, a minha paixão é te admirar e se eu pudesse eu te desmontaria toda, só pra entender como você funciona e depois montaria de novo.">admirável</span>, e muito, mas muito 
+        <span class="clickable" data-text="Sua presença é agradável e confortável, você me dá a chance de mostrar quem eu sou de verdade e me sentir bem com isso, fora que você é hilária.">agradável!</span>
+        <br><br>
         <ins>Clique nos itens sublinhados!</ins>
-        </p>
+      </p>
 
-
-
- <div id="curtainWrapper"> 
-      <img id="curtain" src="eueduda.jpeg" alt="Cortina Snoopy" />
+      <div id="curtainWrapper">
+        <img id="curtain" src="eueduda.jpeg" alt="Cortina Snoopy" />
       </div>
     </div>
- 
-      
-  <!-- NOVO: Fundo escurecido e caixa de diálogo -->
-  <div id="dialogOverlay"></div>
 
-  <div id="dialogBox">
-    <button id="closeDialog">×</button>
-    <div id="dialogContent"></div>
-    
-  </div>
+    <div id="dialogOverlay"></div>
 
+    <div id="dialogBox">
+      <button id="closeDialog">×</button>
+      <div id="dialogContent"></div>
+    </div>
 
     <div id="contador" class="text-container" style="margin-top: 40px;">
-  <p>
-    Já fazem <span id="dias" style="color: red; pointer-events: none;">0</span> dias que eu não desgrudo de você,<br> e
-   nessas últimas <span id="horas" style="color: red; pointer-events: none;">0</span> horas venho pensando em como te fazer feliz. <br>
-    <br>
-  </p>
-</div>
-<span id="dias" style="color: red; pointer-events: none;">0</span>
-
-  
-
-  
+      <p>
+        Já fazem <span id="dias" style="color: red; pointer-events: none;">0</span> dias que eu não desgrudo de você,<br>
+        e nessas últimas <span id="horas" style="color: red; pointer-events: none;">0</span> horas tudo que eu tenho feito é pensado em como te fazer feliz.
+       
+      </p>
+    </div>
+  </div>
 
   <script>
     const button = document.getElementById('revealButton');
@@ -271,28 +282,29 @@
         heart.style.animationDuration = 3 + Math.random() * 2 + 's';
         heart.style.animationDelay = Math.random() * 2 + 's';
         document.body.appendChild(heart);
-
         setTimeout(() => heart.remove(), 7000);
       }, 300);
     }
 
-    let curtainRevealed = false;
-    document.addEventListener('keydown', (e) => {
-  if (!curtainRevealed && e.code === 'Space') {
     const curtain = document.getElementById('curtain');
+    let curtainRevealed = false;
 
+    function dropCurtain() {
+      if (!curtainRevealed) {
+        curtain.style.top = '100%';
+        curtainRevealed = true;
+      }
+    }
 
-    // Desce a cortina
-    curtain.style.top = '100%';
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        dropCurtain();
+      }
+    });
 
+    curtain.addEventListener('click', dropCurtain);
 
-    curtainRevealed = true;
-  }
-});
-
-    
-
-    // NOVO: Caixinha de diálogo clicável
     const dialogOverlay = document.getElementById('dialogOverlay');
     const dialogBox = document.getElementById('dialogBox');
     const dialogContent = document.getElementById('dialogContent');
@@ -302,7 +314,6 @@
       span.addEventListener('click', () => {
         const text = span.dataset.text || '...';
         dialogContent.textContent = text;
-
         dialogBox.classList.add('active');
         dialogOverlay.classList.add('active');
       });
@@ -312,55 +323,35 @@
       dialogBox.classList.remove('active');
       dialogOverlay.classList.remove('active');
     });
-    
-      const curtain = document.getElementById('curtain');
 
+    const dataConheceram = new Date('2025-02-20T00:00:00');
 
-function dropCurtain() {
-  if (!curtainRevealed) {
-    curtain.style.top = '100%';  // Faz a cortina descer
-    curtainRevealed = true;
-  }
-}
+    function atualizarContador() {
+      const agora = new Date();
+      const diffMs = agora - dataConheceram;
 
-// Espaço já configurado pra descer cortina
-document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space') {
-    e.preventDefault();
-    dropCurtain();
-  }
-});
+      if (diffMs < 0) return;
 
-// Agora o clique na imagem da cortina também desce a cortina
-curtain.addEventListener('click', dropCurtain);
+      const dias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const horasTotais = Math.floor(diffMs / (1000 * 60 * 60));
 
-const dataConheceram = new Date('2025-02-20T00:00:00');
+      document.getElementById('dias').textContent = dias;
+      document.getElementById('horas').textContent = horasTotais;
+    }
 
-function atualizarContador() {
-  if (isNaN(dataConheceram.getTime())) {
-    console.error('Data de conheceram inválida!');
-    return;
-  }
+    setInterval(atualizarContador, 1000);
+    atualizarContador();
 
-  const agora = new Date();
-  const diffMs = agora - dataConheceram;
+  const botao = document.getElementById('revealButton');
+  const musica = document.getElementById('musica-fundo');
 
-  if (diffMs < 0) {
-    console.warn('Data de conheceram está no futuro!');
-    return;
-  }
+  musica.loop = true;
 
-  const dias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  const horasTotais = Math.floor(diffMs / (1000 * 60 * 60));
-
-
-  document.getElementById('dias').textContent = dias;
-  document.getElementById('horas').textContent = horasTotais;
-  
-}
-
-setInterval(atualizarContador, 1000);
-atualizarContador();
+  botao.addEventListener('click', () => {
+    musica.play().catch((e) => {
+      console.log("O navegador bloqueou o autoplay. O usuário precisa interagir primeiro.");
+    });
+  });
 
 
   </script>
