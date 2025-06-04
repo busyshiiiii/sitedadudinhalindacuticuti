@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -116,6 +113,7 @@
       overflow: hidden;
     }
 
+
     #curtain {
       position: absolute;
       top: 0;
@@ -207,7 +205,6 @@
   
 <div id="mainContent">  
 
-  
     <h1>~Bem-vinda, Dudinha 🌺~</h1>
       <img id="snoopy" src="snoop.png" alt="snoopy" />
   
@@ -222,26 +219,38 @@
         <span class="clickable" data-text="Sua presença é agradável e confortável, você me da a chanche de mostrar quem eu sou de verdade e me sentir bem com isso, fora que você é hilariante.">agradável!</span>
         <br> <br>
         <ins>Clique nos itens sublinhados!</ins>
-      </p>
+        </p>
 
-  
 
-      
-  <div id="curtainWrapper"> 
+
+ <div id="curtainWrapper"> 
       <img id="curtain" src="eueduda.jpeg" alt="Cortina Snoopy" />
       </div>
+    </div>
+ 
       
-
-           
-
-
   <!-- NOVO: Fundo escurecido e caixa de diálogo -->
   <div id="dialogOverlay"></div>
 
   <div id="dialogBox">
     <button id="closeDialog">×</button>
     <div id="dialogContent"></div>
+    
   </div>
+
+
+    <div id="contador" class="text-container" style="margin-top: 40px;">
+  <p>
+    Já fazem <span id="dias" style="color: red; pointer-events: none;">0</span> dias que eu não desgrudo de você,<br> e
+   nessas últimas <span id="horas" style="color: red; pointer-events: none;">0</span> horas venho pensando em como te fazer feliz. <br>
+    <br>
+  </p>
+</div>
+<span id="dias" style="color: red; pointer-events: none;">0</span>
+
+  
+
+  
 
   <script>
     const button = document.getElementById('revealButton');
@@ -303,6 +312,57 @@
       dialogBox.classList.remove('active');
       dialogOverlay.classList.remove('active');
     });
+    
+      const curtain = document.getElementById('curtain');
+
+
+function dropCurtain() {
+  if (!curtainRevealed) {
+    curtain.style.top = '100%';  // Faz a cortina descer
+    curtainRevealed = true;
+  }
+}
+
+// Espaço já configurado pra descer cortina
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    dropCurtain();
+  }
+});
+
+// Agora o clique na imagem da cortina também desce a cortina
+curtain.addEventListener('click', dropCurtain);
+
+const dataConheceram = new Date('2025-02-20T00:00:00');
+
+function atualizarContador() {
+  if (isNaN(dataConheceram.getTime())) {
+    console.error('Data de conheceram inválida!');
+    return;
+  }
+
+  const agora = new Date();
+  const diffMs = agora - dataConheceram;
+
+  if (diffMs < 0) {
+    console.warn('Data de conheceram está no futuro!');
+    return;
+  }
+
+  const dias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const horasTotais = Math.floor(diffMs / (1000 * 60 * 60));
+
+
+  document.getElementById('dias').textContent = dias;
+  document.getElementById('horas').textContent = horasTotais;
+  
+}
+
+setInterval(atualizarContador, 1000);
+atualizarContador();
+
+
   </script>
 </body>
 </html>
