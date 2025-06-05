@@ -307,40 +307,59 @@
    const button = document.getElementById('revealButton');
 const main = document.getElementById('mainContent');
 const rotateMessage = document.getElementById('rotateMessage');
-const musica = document.getElementById('musica-fundo');
 
-musica.loop = true;
+let buttonClicked = false;
 
-// Função pra mostrar só o que for necessário baseado na orientação e dispositivo
-function checkOrientationAndDevice() {
-  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-  const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+// Função para atualizar visibilidade com base na orientação
+function checkOrientation() {
+  // Se o botão já foi clicado, esconda tudo e mostre o conteúdo
+  if (buttonClicked) {
+    rotateMessage.style.display = 'none';
+    button.style.display = 'none';
+    main.style.display = 'flex';
+    return;
+  }
 
-  if (isMobile && isPortrait) {
-    // Celular em portrait: mostrar só a mensagem, esconder botão e conteúdo
+  // Se for celular (max-width: 768px) e em modo retrato
+  if (window.matchMedia("(max-width: 768px) and (orientation: portrait)").matches) {
+    // Exibe a mensagem pedindo para virar
     rotateMessage.style.display = 'flex';
     button.style.display = 'none';
     main.style.display = 'none';
   } else {
-    // PC ou celular em landscape: esconder mensagem, mostrar botão, esconder conteúdo
+    // Em horizontal ou PC, mostra o botão e esconde a mensagem
     rotateMessage.style.display = 'none';
-    button.style.display = 'inline-block';
+    button.style.display = 'inline-block'; // ou 'block' se preferir
     main.style.display = 'none';
   }
 }
 
-// Chama ao carregar a página
-checkOrientationAndDevice();
-
-// Ouve mudança de orientação
-window.addEventListener('orientationchange', () => {
-  checkOrientationAndDevice();
+// Quando o botão for clicado
+button.addEventListener('click', () => {
+  buttonClicked = true;
+  button.style.display = 'none';
+  rotateMessage.style.display = 'none';
+  main.style.display = 'flex';
+  dropHearts();
+  musica.play().catch(e => {
+    console.log("Navegador bloqueou autoplay, interação necessária.");
+  });
 });
 
-// Também para mudanças de tamanho (em alguns navegadores)
-window.addEventListener('resize', () => {
-  checkOrientationAndDevice();
-});
+// Detecta mudanças de orientação ou redimensionamento
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', checkOrientation);
+
+// Verifica inicialmente quando a página carrega
+checkOrientation();
+
+
+
+
+
+
+
+
 
 // Função para iniciar o conteúdo (chamar ao clicar no botão)
 function startContent() {
@@ -368,6 +387,10 @@ function dropHearts() {
     setTimeout(() => heart.remove(), 7000);
   }, 300);
 }
+
+
+
+
   const curtain = document.getElementById('curtain');
     let curtainRevealed = false;
 
