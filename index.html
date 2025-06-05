@@ -3,10 +3,7 @@
 <head>
   <style>
 @media screen and (orientation: portrait) and (max-width: 768px) {
-  #mainContent, #video-fundo {
-    display: none !important;
-  }
-
+ 
   #rotateMessage {
     display: flex !important;
   }
@@ -307,45 +304,84 @@
   </div>
 
   <script>
-    const button = document.getElementById('revealButton');
-    const main = document.getElementById('mainContent');
+   const button = document.getElementById('revealButton');
+const main = document.getElementById('mainContent');
+const rotateMessage = document.getElementById('rotateMessage');
+const musica = document.getElementById('musica-fundo');
 
-    button.addEventListener('click', () => {
-      button.style.display = 'none';
-      main.style.display = 'flex';
-      dropHearts();
-    });
+musica.loop = true;
 
-    function dropHearts() {
-      setInterval(() => {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.top = '-30px';
-        heart.style.animationDuration = 3 + Math.random() * 2 + 's';
-        heart.style.animationDelay = Math.random() * 2 + 's';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 7000);
-      }, 300);
-    }
+// Função pra mostrar só o que for necessário baseado na orientação e dispositivo
+function checkOrientationAndDevice() {
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+  const isPortrait = window.matchMedia("(orientation: portrait)").matches;
 
-    const curtain = document.getElementById('curtain');
+  if (isMobile && isPortrait) {
+    // Celular em portrait: mostrar só a mensagem, esconder botão e conteúdo
+    rotateMessage.style.display = 'flex';
+    button.style.display = 'none';
+    main.style.display = 'none';
+  } else {
+    // PC ou celular em landscape: esconder mensagem, mostrar botão, esconder conteúdo
+    rotateMessage.style.display = 'none';
+    button.style.display = 'inline-block';
+    main.style.display = 'none';
+  }
+}
+
+// Chama ao carregar a página
+checkOrientationAndDevice();
+
+// Ouve mudança de orientação
+window.addEventListener('orientationchange', () => {
+  checkOrientationAndDevice();
+});
+
+// Também para mudanças de tamanho (em alguns navegadores)
+window.addEventListener('resize', () => {
+  checkOrientationAndDevice();
+});
+
+// Função para iniciar o conteúdo (chamar ao clicar no botão)
+function startContent() {
+  button.style.display = 'none';
+  main.style.display = 'flex';
+  musica.play().catch(() => {
+    console.log("Navegador bloqueou autoplay, esperando interação.");
+  });
+  dropHearts();
+}
+
+// Event listener do botão
+button.addEventListener('click', startContent);
+
+// Sua função já existente que faz cair os corações
+function dropHearts() {
+  setInterval(() => {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.top = '-30px';
+    heart.style.animationDuration = 3 + Math.random() * 2 + 's';
+    heart.style.animationDelay = Math.random() * 2 + 's';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 7000);
+  }, 300);
+}
+  const curtain = document.getElementById('curtain');
     let curtainRevealed = false;
 
     function dropCurtain() {
       if (!curtainRevealed) {
         curtain.style.top = '100%';
         curtainRevealed = true;
-      }
-    }
-
-    document.addEventListener('keydown', (e) => {
+      }}
+          document.addEventListener('keydown', (e) => {
       if (e.code === 'Space') {
         e.preventDefault();
         dropCurtain();
       }
     });
-
     curtain.addEventListener('click', dropCurtain);
 
     const dialogOverlay = document.getElementById('dialogOverlay');
@@ -384,18 +420,6 @@
 
     setInterval(atualizarContador, 1000);
     atualizarContador();
-
-  const botao = document.getElementById('revealButton');
-  const musica = document.getElementById('musica-fundo');
-
-  musica.loop = true;
-
-  botao.addEventListener('click', () => {
-    musica.play().catch((e) => {
-      console.log("O navegador bloqueou o autoplay. O usuário precisa interagir primeiro.");
-    });
-  });
-
 
   </script>
 </body>
