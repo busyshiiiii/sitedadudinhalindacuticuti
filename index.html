@@ -2,15 +2,16 @@
 <html lang="pt-br">
 <head>
   <style>
-  @media screen and (orientation: portrait) and (max-width: 768px) {
-    #mainContent, #revealButton, #video-fundo {
-      display: none !important;
-    }
-
-    #rotateMessage {
-      display: flex !important;
-    }
+@media screen and (orientation: portrait) and (max-width: 768px) {
+  #mainContent, #video-fundo {
+    display: none !important;
   }
+
+  #rotateMessage {
+    display: flex !important;
+  }
+}
+
 
   #rotateMessage {
     display: none;
@@ -45,8 +46,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
     }
 
     #revealButton {
@@ -77,6 +79,14 @@
       left: 0;
       z-index: 2;
       padding: 20px;
+        overflow-y: auto;
+  max-height: unset;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 100px; /* pra não cortar o final */
+
     }
 
     h1 {
@@ -244,6 +254,7 @@
 
 
   <button id="revealButton">Clique aqui!</button>
+
   <div id="rotateMessage">
   Por favor, vire o celular na horizontal para ver essa lindeza como ela merece 💖
 </div>
