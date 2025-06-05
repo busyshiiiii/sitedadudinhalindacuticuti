@@ -444,6 +444,21 @@ function dropHearts() {
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
+
+    button.addEventListener('click', () => {
+  buttonClicked = true;
+  button.style.display = 'none';
+  rotateMessage.style.display = 'none';
+  main.style.display = 'flex';
+
+  dropHearts();
+const musica = document.getElementById('musica-fundo');
+
+  musica.play().catch((e) => {
+    // Se o navegador bloquear, avisa aqui, mas não trava
+    console.log("Autoplay bloqueado, som só tocará depois de interação real.");
+  });
+});
   </script>
 </body>
 </html>
