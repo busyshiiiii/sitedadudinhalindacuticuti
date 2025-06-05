@@ -1,35 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <style>
-@media screen and (orientation: portrait) and (max-width: 768px) {
-  #mainContent, #video-fundo {
-    display: none !important;
-  }
-
-  #rotateMessage {
-    display: flex !important;
-  }
-}
-
-
-  #rotateMessage {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #111;
-    color: white;
-    font-size: 24px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    z-index: 999;
-    padding: 20px;
-  }
-</style>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Para Dudinha</title>
@@ -37,6 +8,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
+    @media screen and (orientation: portrait) and (max-width: 768px) {
+      #mainContent, #video-fundo, #revealButton {
+        display: none !important;
+      }
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -47,8 +24,25 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    #rotateMessage {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #111;
+      color: white;
+      font-size: 24px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 999;
+      padding: 20px;
+      display: flex !important;
     }
 
     #revealButton {
@@ -59,6 +53,7 @@
       border: 2px solid white;
       cursor: pointer;
       transition: 0.3s;
+      z-index: 1000;
     }
 
     #revealButton:hover {
@@ -79,14 +74,13 @@
       left: 0;
       z-index: 2;
       padding: 20px;
-        overflow-y: auto;
-  max-height: unset;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 100px; /* pra não cortar o final */
-
+      overflow-y: auto;
+      max-height: unset;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 100px;
     }
 
     h1 {
@@ -230,50 +224,38 @@
       margin-bottom: -20px;
     }
 
-
-  #video-fundo {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    z-index: -1;
-    opacity: 0.1; /* Quase imperceptível */
-    pointer-events: none; /* Garante que ninguém clique no vídeo sem querer */
-    filter: blur(1px); /* Opcional: dá um arzinho de lembrança distante */
-  }
-
-
-
-
+    #video-fundo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.1;
+      pointer-events: none;
+      filter: blur(1px);
+    }
   </style>
-</head>  
+</head>
 <body>
-
-
+  <div id="rotateMessage">
+      Por favor, vire seu celular para paisagem.
+    </div>
 
   <button id="revealButton">Clique aqui!</button>
 
-  <div id="rotateMessage">
-  Por favor, vire o celular na horizontal para ver essa lindeza como ela merece 💖
-</div>
-
-<audio id="musica-fundo" src="You Love Me.mp3" hidden></audio>
-
+  <audio id="musica-fundo" src="You Love Me.mp3" hidden></audio>
 
   <div id="mainContent">
     <video id="video-fundo" autoplay muted loop playsinline>
-  <source src="elatemotalento.mp4.mp4" type="video/mp4">
-</video>
+      <source src="elatemotalento.mp4.mp4" type="video/mp4">
+    </video>
     <h1>~Bem-vinda, Dudinha 🌺~</h1>
     <img id="snoopy" src="snoop.png" alt="snoopy" />
 
     <div class="text-container">
-      
       <p id="loveText">
-      
-
         Meu bem, desde o dia em que você surgiu na minha vida, os dias têm se tornado cada vez mais belos, com mais significado, e com muita mais alegria, porque apesar das inúmeras preocupações do dia a dia, eu consigo me lembrar que bem longe, tem uma menininha muito bonita, que mesmo cansadinha e estressada, me 
         <span class="clickable" data-text="Algo novo, forte e com certeza delicado.">ama</span>,
         e isso é profundo, e bonito. O que construímos nesse tempo é muito belo e é impossível colocar preço nas nossas experiências. Cada momento juntinho, cada conversa profunda, cada abraço e consideração um pelo outro, todas essas coisas me deixam anestesiado de tanto sentimento, de tanto amor. Eu nunca senti nada comparado com o que eu sinto por você, e eu quero que você saiba, minha princesa, que você é sim 
@@ -290,6 +272,7 @@
       </div>
     </div>
 
+  
     <div id="dialogOverlay"></div>
 
     <div id="dialogBox">
@@ -301,102 +284,166 @@
       <p>
         Já fazem <span id="dias" style="color: red; pointer-events: none;">0</span> dias que eu não desgrudo de você,<br>
         e nessas últimas <span id="horas" style="color: red; pointer-events: none;">0</span> horas tudo que eu tenho feito é pensado em como te fazer feliz.
-       
       </p>
     </div>
   </div>
 
   <script>
-    const button = document.getElementById('revealButton');
-    const main = document.getElementById('mainContent');
+    const revealButton = document.getElementById('revealButton');
+    const mainContent = document.getElementById('mainContent');
+    const rotateMessage = document.getElementById('rotateMessage');
+    const musicaFundo = document.getElementById('musica-fundo');
 
-    button.addEventListener('click', () => {
-      button.style.display = 'none';
-      main.style.display = 'flex';
-      dropHearts();
-    });
+    // Data do começo do relacionamento
+    const startDate = new Date(2023, 6, 8, 0, 0, 0); // 8 de julho de 2023 (mes começa do zero)
 
-    function dropHearts() {
-      setInterval(() => {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.top = '-30px';
-        heart.style.animationDuration = 3 + Math.random() * 2 + 's';
-        heart.style.animationDelay = Math.random() * 2 + 's';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 7000);
-      }, 300);
+    // Elementos do contador
+    const diasEl = document.getElementById('dias');
+    const horasEl = document.getElementById('horas');
+
+    // Função para atualizar o contador de dias e horas
+    function atualizarContador() {
+      const agora = new Date();
+      const diff = agora - startDate;
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      diasEl.textContent = dias;
+      horasEl.textContent = horas;
     }
 
-    const curtain = document.getElementById('curtain');
-    let curtainRevealed = false;
+    atualizarContador();
+    setInterval(atualizarContador, 1000 * 60 * 60);
 
-    function dropCurtain() {
-      if (!curtainRevealed) {
-        curtain.style.top = '100%';
-        curtainRevealed = true;
+    // Controle da exibição para celular x desktop
+    function isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    // Função para mostrar o conteúdo principal e iniciar música
+    function mostrarConteudo() {
+      revealButton.style.display = 'none';
+      mainContent.style.display = 'flex';
+      musicaFundo.play().catch(() => {
+        // Sem problema se não der play automático
+      });
+    }
+
+    // Mostrar aviso para virar celular
+    function mostrarAvisoRotacao(show) {
+      rotateMessage.style.display = show ? 'flex' : 'none';
+    }
+
+    // Verificar orientação e agir de acordo
+    function checarOrientacao() {
+      if (isMobile()) {
+        if (window.matchMedia("(orientation: landscape)").matches) {
+          mostrarAvisoRotacao(false);
+          mostrarConteudo();
+        } else {
+          mostrarAvisoRotacao(true);
+          mainContent.style.display = 'none';
+          revealButton.style.display = 'none';
+        }
+      } else {
+        // Desktop libera direto no clique
+        mostrarConteudo();
       }
     }
 
-    document.addEventListener('keydown', (e) => {
-      if (e.code === 'Space') {
-        e.preventDefault();
-        dropCurtain();
+    // Evento do botão para desktop e dispositivos móveis (vai ativar se estiver landscape)
+    revealButton.addEventListener('click', () => {
+      if (isMobile()) {
+        if (window.matchMedia("(orientation: landscape)").matches) {
+          mostrarConteudo();
+        } else {
+          mostrarAvisoRotacao(true);
+        }
+      } else {
+        mostrarConteudo();
       }
     });
 
-    curtain.addEventListener('click', dropCurtain);
+    // Escuta mudanças na orientação no celular
+    window.addEventListener('orientationchange', () => {
+      if (isMobile()) {
+        if (window.matchMedia("(orientation: landscape)").matches) {
+          mostrarAvisoRotacao(false);
+          mostrarConteudo();
+        } else {
+          mostrarAvisoRotacao(true);
+          mainContent.style.display = 'none';
+          revealButton.style.display = 'none';
+        }
+      }
+    });
 
+    // Inicialização
+    if (!isMobile()) {
+      // Desktop: mostrar botão e conteúdo no clique
+      revealButton.style.display = 'inline-block';
+      mainContent.style.display = 'none';
+    } else {
+      // Mobile: só mostra botão, esconde tudo no portrait
+      revealButton.style.display = 'inline-block';
+      mainContent.style.display = 'none';
+      if (!window.matchMedia("(orientation: landscape)").matches) {
+        mostrarAvisoRotacao(true);
+        revealButton.style.display = 'none';
+      }
+    }
+
+    // ---- Interação do texto clicável e diálogo ----
+    const clickableItems = document.querySelectorAll('.clickable');
     const dialogOverlay = document.getElementById('dialogOverlay');
     const dialogBox = document.getElementById('dialogBox');
     const dialogContent = document.getElementById('dialogContent');
     const closeDialog = document.getElementById('closeDialog');
 
-    document.querySelectorAll('.clickable').forEach(span => {
-      span.addEventListener('click', () => {
-        const text = span.dataset.text || '...';
-        dialogContent.textContent = text;
-        dialogBox.classList.add('active');
+    clickableItems.forEach(item => {
+      item.addEventListener('click', () => {
+        dialogContent.textContent = item.getAttribute('data-text');
         dialogOverlay.classList.add('active');
+        dialogBox.classList.add('active');
       });
     });
 
     closeDialog.addEventListener('click', () => {
-      dialogBox.classList.remove('active');
       dialogOverlay.classList.remove('active');
+      dialogBox.classList.remove('active');
     });
 
-    const dataConheceram = new Date('2025-02-20T00:00:00');
+    dialogOverlay.addEventListener('click', () => {
+      dialogOverlay.classList.remove('active');
+      dialogBox.classList.remove('active');
+    });
 
-    function atualizarContador() {
-      const agora = new Date();
-      const diffMs = agora - dataConheceram;
+    // Animação de corações caindo
+    function criarCoracao() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      heart.style.opacity = Math.random();
+      heart.style.fontSize = (Math.random() * 10 + 10) + 'px';
+      document.body.appendChild(heart);
 
-      if (diffMs < 0) return;
-
-      const dias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-      const horasTotais = Math.floor(diffMs / (1000 * 60 * 60));
-
-      document.getElementById('dias').textContent = dias;
-      document.getElementById('horas').textContent = horasTotais;
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
     }
 
-    setInterval(atualizarContador, 1000);
-    atualizarContador();
+    setInterval(criarCoracao, 300);
 
-  const botao = document.getElementById('revealButton');
-  const musica = document.getElementById('musica-fundo');
+    // Animação da cortina (Snoopy)
+    const curtain = document.getElementById('curtain');
+    const snoopy = document.getElementById('snoopy');
 
-  musica.loop = true;
-
-  botao.addEventListener('click', () => {
-    musica.play().catch((e) => {
-      console.log("O navegador bloqueou o autoplay. O usuário precisa interagir primeiro.");
-    });
-  });
-
-
+    setTimeout(() => {
+      curtain.style.top = '-150%';
+      snoopy.style.top = '0';
+      snoopy.style.transform = 'scale(1.1)';
+    }, 500);
   </script>
+
 </body>
 </html>
